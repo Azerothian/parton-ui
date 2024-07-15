@@ -1,5 +1,5 @@
 import { vi, expect, it, describe, beforeEach } from "vitest";
-import { createFsFromVolume, vol } from 'memfs';
+import { createFsFromVolume, vol } from "memfs";
 import { buildComponentsFile } from "../../src/tools/build.ts";
 import path from "path";
 
@@ -15,32 +15,29 @@ export default {
 
 const fs = createFsFromVolume(vol);
 
-vi.mock('node:fs', () => createFsFromVolume(vol));
-vi.mock('node:fs/promises', () => ({
+vi.mock("node:fs", () => createFsFromVolume(vol));
+vi.mock("node:fs/promises", () => ({
   default: createFsFromVolume(vol).promises,
 }));
 
-vi.mock('globby', () => ({
+vi.mock("globby", () => ({
   globby: async () => {
-    return [
-      'components/',
-      'components/main.tsx',
-    ]
-  }
+    return ["components/", "components/main.tsx"];
+  },
 }));
 // vi.mock('fs/promises');
 
 describe("tools/build", () => {
   beforeEach(() => {
     // reset the state of in-memory fs
-    vol.reset()
-  })
+    vol.reset();
+  });
   it("buildComponentsFile - test", async () => {
-    const cwd = '/project'
+    const cwd = "/project";
     vol.mkdirSync(path.resolve(cwd, "./src"), { recursive: true });
     vol.fromJSON(
       {
-        'src/components/main.tsx': 'Main Component',
+        "src/components/main.tsx": "Main Component",
       },
       // default cwd
       cwd,
@@ -49,15 +46,21 @@ describe("tools/build", () => {
     // console.log("vol", vol.toJSON());
 
     try {
-      await buildComponentsFile(cwd, "./src/components", "./src/component.ts", "/prefix");
+      await buildComponentsFile(
+        cwd,
+        "./src/components",
+        "./src/component.ts",
+        "/prefix",
+      );
     } catch (error) {
       console.error(error);
       expect(false).toBeTruthy();
     }
-  
-    const content = await fs.promises.readFile("/project/src/component.ts", "utf-8");
-    expect(content).toBe(buildOutput)
-  });
 
-  
+    const content = await fs.promises.readFile(
+      "/project/src/component.ts",
+      "utf-8",
+    );
+    expect(content).toBe(buildOutput);
+  });
 });

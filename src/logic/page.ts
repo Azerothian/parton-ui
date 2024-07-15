@@ -1,8 +1,4 @@
-import React, { Suspense, useContext } from "react";
 import { gql } from "@apollo/client";
-import config from "../config";
-// import Loader from "../components/loader";
-import { Route } from "react-router-dom";
 
 const pageFields = `id
 name
@@ -112,6 +108,6 @@ export const getPagesQuery = gql`
   }
 `;
 
-export function getPagesQueryResult(result) {
+export function getPagesQueryResult(result: any) {
   return result.data.classMethods.Item.getPages;
 }

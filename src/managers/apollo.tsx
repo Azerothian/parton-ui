@@ -1,93 +1,36 @@
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import { ApolloClient, ApolloProvider } from "@apollo/client";
 import { BatchHttpLink } from "@apollo/client/link/batch-http";
-import React, { useState } from "react";
-import config from "../config";
+import { useContext } from "react";
+import { PartonUIConfigContext } from "./config";
+import { createBasicMemoryCache, createMemoryCacheFromJTDSchema } from "../apollo/memory-cache";
 
-function merge(existing: any, incoming: any) {
-  return {
-    ...existing,
-    ...incoming,
-  };
-}
-const cache = new InMemoryCache({
-  typePolicies: {
-    QueryClassMethods: {
-      merge(existing = {}, incoming) {
-        const output = {
-          ...existing,
-        };
-        Object.keys(incoming).forEach((k) => {
-          if (existing[k] && k !== "__typename") {
-            output[k] = merge(existing[k], incoming[k]);
-          } else {
-            output[k] = incoming[k];
-          }
-        });
-        return output;
-      },
-    },
-    QueryModels: {
-      merge(existing = {}, incoming) {
-        return {
-          ...existing,
-          ...incoming,
-        };
-      },
-    },
-    MutationClassMethods: {
-      merge(existing = {}, incoming) {
-        const output = {
-          ...existing,
-        };
-        Object.keys(incoming).forEach((k) => {
-          if (existing[k] && k !== "__typename") {
-            output[k] = merge(existing[k], incoming[k]);
-          } else {
-            output[k] = incoming[k];
-          }
-        });
-        return output;
-      },
-    },
-    MutationModels: {
-      merge(existing = {}, incoming) {
-        return {
-          ...existing,
-          ...incoming,
-        };
-      },
-    },
-  },
-});
-let client: ApolloClient<any> | undefined = undefined;
-export async function getClient() {
-  if (client) {
-    return client;
-  }
-  const api = `${config.api.host}${config.api.endpoint}`;
-  client = new ApolloClient({
-    // credentials: "include",
-    // uri: api,
-    link: new BatchHttpLink({
-      credentials: "include",
-      uri: api,
-      batchMax: 20,
-      batchInterval: 50,
-    }),
-    cache: cache,
-  });
-  return client;
-}
 
 export default function ApolloManager(props: any) {
-  const [isLoaded, setLoaded] = useState(false);
-  if (!isLoaded || !client) {
-    (async () => {
-      await getClient();
-      // logger.debug("loaded client", client);
-      return setLoaded(true);
-    })();
-    return <React.Fragment />;
+  const config = useContext(PartonUIConfigContext);
+  let client = config.graphql?.apolloClient;
+  if (!client) {
+    const {cache, link, defaultOptions, ...apolloConfig} = config.graphql?.apolloConfig || {};
+    client = new ApolloClient({
+      cache: config.graphql?.jtdSchema ? createMemoryCacheFromJTDSchema(config.graphql.jtdSchema) : createBasicMemoryCache(),
+      link: link ? link: new BatchHttpLink({
+        credentials: "include",
+        uri: `${config.endpoint.host}${config.endpoint.path}`,
+      }),
+      defaultOptions: defaultOptions ? defaultOptions : {
+        watchQuery: {
+          fetchPolicy: "cache-and-network",
+          errorPolicy: "ignore",
+        },
+        query: {
+          fetchPolicy: "cache-first",
+          errorPolicy: "all",
+        },
+        mutate: {
+          errorPolicy: "all",
+        },
+      },
+      ...apolloConfig,
+    });
   }
 
   return <ApolloProvider client={client}>{props.children}</ApolloProvider>;

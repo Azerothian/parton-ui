@@ -1,6 +1,5 @@
-import React, { createContext, Fragment, useContext, useEffect } from "react";
-import { useQuery } from "@apollo/client";
-
+import { createContext, Fragment, useContext, useEffect } from "react";
+import { useQuery } from "../data";
 import {
   getCurrentUserQuery,
   getCurrentUserResult,
@@ -32,8 +31,6 @@ export function AuthManager(props: { isLoggedIn: boolean; children: any }) {
         isLoggedIn: props.isLoggedIn,
         user,
         schema,
-        // checkPermission: checkPermission,
-        // checkForMutationField: checkForMutationField,
       }}
     >
       {props.children}

@@ -6,11 +6,16 @@ import fs from "node:fs/promises";
 function isFolder(f: string) {
   return path.extname(f) === "";
 }
-export async function buildComponentsFile(cwd = process.cwd(), input = "./src/components/", output = "./src/component.ts", base = "/components") {
+export async function buildComponentsFile(
+  cwd = process.cwd(),
+  input = "./src/components/",
+  output = "./src/component.ts",
+  base = "/components",
+) {
   const header: string[] = [];
   const expt: string[] = [];
   const dir = path.resolve(cwd, input);
-  const results =  await globby("**/*", {
+  const results = await globby("**/*", {
     expandDirectories: true,
     onlyFiles: true,
     markDirectories: false,
@@ -26,7 +31,7 @@ export async function buildComponentsFile(cwd = process.cwd(), input = "./src/co
     return 0;
   });
 
-  directories.forEach((file, index) => {
+  directories.forEach((file) => {
     const f = `/${file}`;
     let d = path.dirname(f);
     if (d === "/") {
@@ -51,5 +56,4 @@ ${expt.join("\n")}
   await fs.writeFile(target, txt, {
     encoding: "utf-8",
   });
-  // console.log("output", target)
 }
