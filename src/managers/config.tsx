@@ -7,9 +7,7 @@ import {
   NormalizedCacheObject,
 } from "@apollo/client";
 import { IJtdMinRoot } from "@vostro/jtd-types";
-export interface LayoutCollection {
-  [key: string]: React.ComponentType;
-}
+export type LayoutCollection = Record<string, React.ComponentType>;
 export interface PartonUIConfigGraphQL {
   jtdSchema: IJtdMinRoot;
   apolloClient: ApolloClient<any> | undefined;

@@ -16,8 +16,8 @@ const AuthContext = createContext({
 
 export function AuthManager(props: { isLoggedIn: boolean; children: any }) {
   let user, schema;
+  const currentUserResult = useQuery(getCurrentUserQuery);
   if (props.isLoggedIn) {
-    const currentUserResult = useQuery(getCurrentUserQuery);
     const userResult = getCurrentUserResult(currentUserResult);
     user = userResult.user;
     schema = userResult.schema;

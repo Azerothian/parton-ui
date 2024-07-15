@@ -1,4 +1,4 @@
-const eslintPluginPrettierRecommended = require("eslint-plugin-prettier/recommended");
+// const eslintPluginPrettierRecommended = require("eslint-plugin-prettier/recommended");
 
 module.exports = {
   root: true,
@@ -11,14 +11,21 @@ module.exports = {
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
   ],
-  ignorePatterns: ["dist", ".eslintrc.cjs"],
+  ignorePatterns: ["lib", ".eslintrc.cjs"],
   parser: "@typescript-eslint/parser",
-  plugins: ["react-refresh", eslintPluginPrettierRecommended],
+  plugins: ["react-refresh", "eslint-plugin-prettier/recommended"],
   rules: {
     "react-refresh/only-export-components": [
       "warn",
       { allowConstantExport: true },
     ],
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-unsafe-return": "warn",
+    "@typescript-eslint/no-unsafe-member-access": "warn",
+    "@typescript-eslint/no-unsafe-argument": "warn",
+    "@typescript-eslint/no-unsafe-assignment": "warn",
+    "@typescript-eslint/no-unsafe-call": "warn",
+
   },
   parserOptions: {
     ecmaVersion: "latest",

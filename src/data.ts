@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import {
   useQuery as useApolloQuery,
   useMutation as useApolloMutation,
@@ -6,6 +5,10 @@ import {
   useApolloClient,
   QueryHookOptions,
   LazyQueryHookOptions,
+  MutationFunctionOptions,
+  OperationVariables,
+  DefaultContext,
+  ApolloCache,
 } from "@apollo/client";
 
 import { DocumentNode } from "graphql";
@@ -45,11 +48,25 @@ export function useMutation(query: DocumentNode) {
   const q = processDoc(query, jtdSchema);
   const [mutation, mutationData] = useApolloMutation(q.__cache);
   return [
-    (options: any) => {
-      let opts = {
+    (
+      options:
+        | MutationFunctionOptions<
+            any,
+            OperationVariables,
+            DefaultContext,
+            ApolloCache<any>
+          >
+        | undefined,
+    ) => {
+      const opts: MutationFunctionOptions<
+        any,
+        OperationVariables,
+        DefaultContext,
+        ApolloCache<any>
+      > = {
         ...options,
       };
-      if (options.variables) {
+      if (options?.variables) {
         opts.variables = cleanVariables(q.__meta, jtdSchema, options.variables);
         console.log("opts", opts, jtdSchema);
       }
@@ -62,7 +79,7 @@ export function useMutation(query: DocumentNode) {
 export function useQuery(query: DocumentNode, options?: QueryHookOptions<any>) {
   const { jtdSchema } = usePartonUIConfig().graphql;
   const q = processDoc(query, jtdSchema);
-  let variables;
+  let variables: any = {};
   if (options?.variables) {
     variables = cleanVariables(q.__meta, jtdSchema, options.variables);
   }

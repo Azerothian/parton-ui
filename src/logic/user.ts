@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { gql } from "@apollo/client";
 
 export const getRolesQuery = gql`
@@ -76,7 +77,7 @@ export const getCurrentUserQueryOptions = {
       return Object.assign({}, ownProps, { loading });
     }
     let user, role, schema;
-    if (classMethods && classMethods.User && classMethods.User.getCurrentUser) {
+    if (classMethods?.User?.getCurrentUser) {
       user = classMethods.User.getCurrentUser;
       role = user.role.name;
     }

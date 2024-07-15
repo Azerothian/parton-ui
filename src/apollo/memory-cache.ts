@@ -96,15 +96,11 @@ export function createMemoryCacheFromJTDSchema(jtdSchema: IJtdMinRoot) {
           };
           return outgoing;
         },
-        fields: Object.keys(jtdSchema.def.QueryModels?.p || []).reduce(
+        fields: Object.keys(jtdSchema.def.QueryModels?.p ?? []).reduce(
           (o, keyName) => {
             // added a lot of null checks here, not sure on performance hit? (had to for typescript)
 
-            if (
-              !jtdSchema?.def ||
-              !jtdSchema.def?.QueryModels?.p ||
-              !jtdSchema.def.QueryModels.p[keyName].ref
-            ) {
+            if (!jtdSchema?.def?.QueryModels?.p?.[keyName].ref) {
               throw new Error("Invalid JTD Schema");
             }
 

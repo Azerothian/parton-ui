@@ -1,22 +1,24 @@
 import { ApolloClient, ApolloProvider } from "@apollo/client";
 import { BatchHttpLink } from "@apollo/client/link/batch-http";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { PartonUIConfigContext } from "./config";
 import {
   createBasicMemoryCache,
   createMemoryCacheFromJTDSchema,
 } from "../apollo/memory-cache";
 
-export default function ApolloManager(props: any) {
+export default function ApolloManager(props: React.PropsWithChildren<any>) {
   const config = useContext(PartonUIConfigContext);
   let client = config.graphql?.apolloClient;
   if (!client) {
     const { cache, link, defaultOptions, ...apolloConfig } =
-      config.graphql?.apolloConfig || {};
+      config.graphql?.apolloConfig ?? {};
     client = new ApolloClient({
-      cache: config.graphql?.jtdSchema
-        ? createMemoryCacheFromJTDSchema(config.graphql.jtdSchema)
-        : createBasicMemoryCache(),
+      cache: cache
+        ? cache
+        : config.graphql?.jtdSchema
+          ? createMemoryCacheFromJTDSchema(config.graphql.jtdSchema)
+          : createBasicMemoryCache(),
       link: link
         ? link
         : new BatchHttpLink({

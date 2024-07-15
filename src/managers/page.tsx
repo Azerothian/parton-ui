@@ -2,7 +2,7 @@ import { gql, useQuery } from "@apollo/client";
 import React, { Suspense, useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { PartonUIConfigContext } from "./config";
-export interface PageProps {}
+// export interface PageProps {}
 
 export const PageContext = React.createContext({
   page: undefined,
@@ -54,7 +54,7 @@ export function getPageQueryResult(result: any) {
 }
 
 export default function Page() {
-  let location = useLocation();
+  const location = useLocation();
   const u = new URL(window.location.toString());
   const p = `${u.protocol}//${u.host}${location.pathname}`;
   const result = useQuery(getPageQuery, {
@@ -65,7 +65,7 @@ export default function Page() {
   const page = getPageQueryResult(result);
   useEffect(() => {
     // todo - expose to config hook? or props on page;
-    document.title = `${(page || {}).displayName || ""}`;
+    document.title = `${page?.displayName || ""}`;
   }, [page]);
 
   const config = useContext(PartonUIConfigContext);
