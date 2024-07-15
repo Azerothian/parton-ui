@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Default404 } from "../controls/f404";
 import { DefaultLoader } from "../controls/loader";
 import {
@@ -9,7 +9,8 @@ import {
 import { IJtdMinRoot } from "@vostro/jtd-types";
 export type LayoutCollection = Record<string, React.ComponentType>;
 export interface PartonUIConfigGraphQL {
-  jtdSchema: IJtdMinRoot;
+  // loadJtd: boolean;
+  jtdSchema: IJtdMinRoot | undefined;
   apolloClient: ApolloClient<any> | undefined;
   apolloConfig: ApolloClientOptions<NormalizedCacheObject> | undefined;
 }
@@ -18,6 +19,8 @@ export interface PartonUIConfig {
   endpoint: {
     host: string; // /
     path: string; // graphql.api
+    jdtPath: string; // jtd.api
+    options?: RequestInit;
   };
   controls: {
     F404: React.ComponentType;
@@ -28,10 +31,11 @@ export interface PartonUIConfig {
   graphql: PartonUIConfigGraphQL;
 }
 
-export const PartonUIConfigContext = React.createContext<PartonUIConfig>({
+export const configDefaults: PartonUIConfig = {
   endpoint: {
     host: "/",
     path: "graphql.api",
+    jdtPath: "graphql.jdt",
   },
   components: {},
   layouts: {},
@@ -39,21 +43,52 @@ export const PartonUIConfigContext = React.createContext<PartonUIConfig>({
     F404: Default404,
     Loader: DefaultLoader,
   },
+
   graphql: {
-    jtdSchema: {},
+    // loadJtd: true,
+    jtdSchema: undefined,
     apolloClient: undefined,
     apolloConfig: undefined,
   },
-});
+};
+
+export const PartonUIConfigContext =
+  React.createContext<PartonUIConfig>(configDefaults);
 export const PartonUIProvider = PartonUIConfigContext.Provider;
 export const PartonUIConsumer = PartonUIConfigContext.Consumer;
 
-export default function PartonUIConfigManager(props: {
+export interface PartonUIConfigManagerProps {
   config: PartonUIConfig;
   children: any;
-}) {
+}
+export default function PartonUIConfigManager(
+  props: PartonUIConfigManagerProps,
+) {
+  const config = { ...configDefaults, ...props.config };
+  const [jdtSchema, setJdtSchema] = React.useState<IJtdMinRoot | undefined>(
+    props.config.graphql.jtdSchema,
+  );
+  useEffect(() => {
+    fetch(
+      `${config.endpoint.host}${config.endpoint.jdtPath}`,
+      config.endpoint.options,
+    )
+      .then((response) => response.json())
+      .then((data) => setJdtSchema(data));
+  }, [config.endpoint.host, config.endpoint.jdtPath]);
+  const { Loader } = config.controls;
+  if (!jdtSchema) {
+    return <Loader />;
+  }
+  const configWithJtd: PartonUIConfig = {
+    ...config,
+    graphql: {
+      ...config.graphql,
+      jtdSchema: jdtSchema,
+    },
+  };
   return (
-    <PartonUIProvider value={props.config}>{props.children}</PartonUIProvider>
+    <PartonUIProvider value={configWithJtd}>{props.children}</PartonUIProvider>
   );
 }
 

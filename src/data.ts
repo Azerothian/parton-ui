@@ -45,6 +45,9 @@ function processDoc(
 
 export function useMutation(query: DocumentNode) {
   const { jtdSchema } = usePartonUIConfig().graphql;
+  if (!jtdSchema) {
+    throw new Error("JTD Schema not loaded");
+  }
   const q = processDoc(query, jtdSchema);
   const [mutation, mutationData] = useApolloMutation(q.__cache);
   return [
@@ -78,6 +81,9 @@ export function useMutation(query: DocumentNode) {
 
 export function useQuery(query: DocumentNode, options?: QueryHookOptions<any>) {
   const { jtdSchema } = usePartonUIConfig().graphql;
+  if (!jtdSchema) {
+    throw new Error("JTD Schema not loaded");
+  }
   const q = processDoc(query, jtdSchema);
   let variables: any = {};
   if (options?.variables) {
@@ -94,6 +100,9 @@ export function useLazyQuery(
   options: LazyQueryHookOptions<any>,
 ) {
   const { jtdSchema } = usePartonUIConfig().graphql;
+  if (!jtdSchema) {
+    throw new Error("JTD Schema not loaded");
+  }
   const q = processDoc(query, jtdSchema);
   if (!q.__cache) {
     throw new Error("Query was not processed correctly");
@@ -115,6 +124,9 @@ export function useLazyQuery(
 }
 export function useApolloClientQuery() {
   const { jtdSchema } = usePartonUIConfig().graphql;
+  if (!jtdSchema) {
+    throw new Error("JTD Schema not loaded");
+  }
 
   const apolloClient = useApolloClient();
   return [
