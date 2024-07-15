@@ -1,11 +1,40 @@
-import { createMemoryCacheFromJTDSchema, createBasicMemoryCache } from "./apollo/memory-cache";
+import {
+  createMemoryCacheFromJTDSchema,
+  createBasicMemoryCache,
+} from "./apollo/memory-cache";
 export { createMemoryCacheFromJTDSchema, createBasicMemoryCache };
 
-import { getRolesQuery, getRolesResult, resetPasswordMutation, getCurrentUserResult, getCurrentUserQuery, getCurrentUserQueryOptions } from "./logic/user";
-export { getRolesQuery, getRolesResult, resetPasswordMutation, getCurrentUserResult, getCurrentUserQuery, getCurrentUserQueryOptions };
+import {
+  getRolesQuery,
+  getRolesResult,
+  resetPasswordMutation,
+  getCurrentUserResult,
+  getCurrentUserQuery,
+  getCurrentUserQueryOptions,
+} from "./logic/user";
+export {
+  getRolesQuery,
+  getRolesResult,
+  resetPasswordMutation,
+  getCurrentUserResult,
+  getCurrentUserQuery,
+  getCurrentUserQueryOptions,
+};
 
-import { getPageWithChildrenQuery, getPageWithChildrenResult, getPageQuery, getPageQueryResult, getPageQueryOptions } from "./logic/page";
-export { getPageWithChildrenQuery, getPageWithChildrenResult, getPageQuery, getPageQueryResult, getPageQueryOptions };
+import {
+  getPageWithChildrenQuery,
+  getPageWithChildrenResult,
+  getPageQuery,
+  getPageQueryResult,
+  getPageQueryOptions,
+} from "./logic/page";
+export {
+  getPageWithChildrenQuery,
+  getPageWithChildrenResult,
+  getPageQuery,
+  getPageQueryResult,
+  getPageQueryOptions,
+};
 
 import FileNotFound from "./controls/f404";
 export { FileNotFound };
@@ -28,5 +57,10 @@ export { AuthManager, AuthRedirect, useAuth };
 import BaseManager from "./managers/base";
 export { BaseManager };
 
-import { useQuery, useMutation, useLazyQuery, useApolloClientQuery } from "./data";
+import {
+  useQuery,
+  useMutation,
+  useLazyQuery,
+  useApolloClientQuery,
+} from "./data";
 export { useQuery, useMutation, useLazyQuery, useApolloClientQuery };

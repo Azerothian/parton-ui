@@ -2,8 +2,7 @@ import { gql, useQuery } from "@apollo/client";
 import React, { Suspense, useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { PartonUIConfigContext } from "./config";
-export interface PageProps {
-}
+export interface PageProps {}
 
 export const PageContext = React.createContext({
   page: undefined,
@@ -64,13 +63,14 @@ export default function Page() {
   const { loading, error } = result;
 
   const page = getPageQueryResult(result);
-  useEffect(() => { // todo - expose to config hook? or props on page;
+  useEffect(() => {
+    // todo - expose to config hook? or props on page;
     document.title = `${(page || {}).displayName || ""}`;
   }, [page]);
 
   const config = useContext(PartonUIConfigContext);
-  const {layouts} = config;
-  const {Loader, F404} = config.controls;
+  const { layouts } = config;
+  const { Loader, F404 } = config.controls;
 
   if (error) {
     return `Error! ${error.message}`;
@@ -78,9 +78,7 @@ export default function Page() {
   return (
     <div>
       {page ? (
-        <PageProvider
-          value={{ page }}
-        >
+        <PageProvider value={{ page }}>
           <Suspense fallback={<Loader />}>
             {React.createElement(layouts[page.layout.path])}
           </Suspense>

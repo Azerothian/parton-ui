@@ -5,21 +5,18 @@ import react from "@vitejs/plugin-react-swc";
 import dts from "vite-plugin-dts";
 // https://vitejs.dev/config/
 
-
-
 export default defineConfig({
   cacheDir: "node_modules/.vite",
   plugins: [react()],
-  
+
   build: {
-    
-    rollupOptions:{
+    rollupOptions: {
       // treeshake: true,
       input: {
         index: "./src/index.tsx",
         data: "./src/data.ts",
       },
-      
+
       external: [
         "react",
         "react-dom",
@@ -27,7 +24,7 @@ export default defineConfig({
         "@vostro/clean-gql",
         "@apollo/client",
         "graphql",
-      ]
+      ],
     },
     minify: true,
     lib: {

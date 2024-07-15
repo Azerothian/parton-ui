@@ -1,6 +1,6 @@
 import { InMemoryCache } from "@apollo/client";
-import {  relayStylePagination } from "@apollo/client/utilities";
-import type {IJtdMinRoot} from "@vostro/jtd-types";
+import { relayStylePagination } from "@apollo/client/utilities";
+import type { IJtdMinRoot } from "@vostro/jtd-types";
 
 function merge(existing: any, incoming: any) {
   return {
@@ -63,9 +63,8 @@ export function createBasicMemoryCache() {
   });
 }
 
-
 export function createMemoryCacheFromJTDSchema(jtdSchema: IJtdMinRoot) {
-  if(!jtdSchema?.def) {
+  if (!jtdSchema?.def) {
     throw new Error("Invalid JTD Schema");
   }
 
@@ -97,50 +96,59 @@ export function createMemoryCacheFromJTDSchema(jtdSchema: IJtdMinRoot) {
           };
           return outgoing;
         },
-        fields: Object.keys(jtdSchema.def.QueryModels?.p || []).reduce((o, keyName) => {
-          // added a lot of null checks here, not sure on performance hit? (had to for typescript)
+        fields: Object.keys(jtdSchema.def.QueryModels?.p || []).reduce(
+          (o, keyName) => {
+            // added a lot of null checks here, not sure on performance hit? (had to for typescript)
 
-          if(!jtdSchema?.def || !jtdSchema.def?.QueryModels?.p || !jtdSchema.def.QueryModels.p[keyName].ref) {
-            throw new Error("Invalid JTD Schema");
-          }
-          
-          const listDef = jtdSchema.def[jtdSchema.def.QueryModels.p[keyName].ref];
-          if (!listDef.p?.edges?.el?.ref) {
-            throw new Error("Invalid JTD Schema");
-          }
-          const edgesDef = jtdSchema.def[listDef.p.edges.el.ref];
-          if (!edgesDef.p?.node.ref) {
-            throw new Error("Invalid JTD Schema");
-          }
-          const nodeDef = jtdSchema.def[edgesDef.p.node.ref];
-          if (!nodeDef.p) {
-            throw new Error("Invalid JTD Schema");
-          }
-          o[keyName] = {
-            ...relayPage,
-            fields: {
-              edges: {
-                node: {
-                  ...Object.keys(nodeDef.p).map((fieldName) => {
+            if (
+              !jtdSchema?.def ||
+              !jtdSchema.def?.QueryModels?.p ||
+              !jtdSchema.def.QueryModels.p[keyName].ref
+            ) {
+              throw new Error("Invalid JTD Schema");
+            }
 
-                    if (!nodeDef.p || !jtdSchema?.def) {
-                      throw new Error("Invalid JTD Schema");
-                    }
-                    const e = nodeDef.p[fieldName];
-                    if (e.ref) {
-                      const targetEl = jtdSchema.def[e.ref];
-                      if (targetEl?.p?.edges) {
-                        return relayPage;
-                      }
-                    }
-                    return undefined;
-                  }).filter((s) => !s),
+            const listDef =
+              jtdSchema.def[jtdSchema.def.QueryModels.p[keyName].ref];
+            if (!listDef.p?.edges?.el?.ref) {
+              throw new Error("Invalid JTD Schema");
+            }
+            const edgesDef = jtdSchema.def[listDef.p.edges.el.ref];
+            if (!edgesDef.p?.node.ref) {
+              throw new Error("Invalid JTD Schema");
+            }
+            const nodeDef = jtdSchema.def[edgesDef.p.node.ref];
+            if (!nodeDef.p) {
+              throw new Error("Invalid JTD Schema");
+            }
+            o[keyName] = {
+              ...relayPage,
+              fields: {
+                edges: {
+                  node: {
+                    ...Object.keys(nodeDef.p)
+                      .map((fieldName) => {
+                        if (!nodeDef.p || !jtdSchema?.def) {
+                          throw new Error("Invalid JTD Schema");
+                        }
+                        const e = nodeDef.p[fieldName];
+                        if (e.ref) {
+                          const targetEl = jtdSchema.def[e.ref];
+                          if (targetEl?.p?.edges) {
+                            return relayPage;
+                          }
+                        }
+                        return undefined;
+                      })
+                      .filter((s) => !s),
+                  },
                 },
               },
-            },
-          };
-          return o;
-        }, {} as any),
+            };
+            return o;
+          },
+          {} as any,
+        ),
       },
       MutationClassMethods: {
         merge(existing: any = {}, incoming: any) {

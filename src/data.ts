@@ -8,12 +8,13 @@ import {
   LazyQueryHookOptions,
 } from "@apollo/client";
 
-import {
-  DocumentNode,
-} from "graphql";
+import { DocumentNode } from "graphql";
 
 // import {AuthStorage} from "../logic/storage";
-import {cleanDocumentWithJTDMinMeta, cleanVariables} from "@vostro/clean-gql/lib/jtd-min";
+import {
+  cleanDocumentWithJTDMinMeta,
+  cleanVariables,
+} from "@vostro/clean-gql/lib/jtd-min";
 import { usePartonUIConfig } from "./managers/config";
 import { IJtdMinRoot } from "@vostro/jtd-types";
 
@@ -27,9 +28,12 @@ export interface EnhancedDocumentNode extends DocumentNode {
   __meta: any;
 }
 
-function processDoc(query: OptionalDocumentNode, jtdSchema: IJtdMinRoot) : EnhancedDocumentNode {
+function processDoc(
+  query: OptionalDocumentNode,
+  jtdSchema: IJtdMinRoot,
+): EnhancedDocumentNode {
   if (!query.__cache) {
-    const {doc, meta} = cleanDocumentWithJTDMinMeta(query, jtdSchema);
+    const { doc, meta } = cleanDocumentWithJTDMinMeta(query, jtdSchema);
     query.__cache = doc;
     query.__meta = meta;
   }
@@ -37,23 +41,26 @@ function processDoc(query: OptionalDocumentNode, jtdSchema: IJtdMinRoot) : Enhan
 }
 
 export function useMutation(query: DocumentNode) {
-  const {jtdSchema} = usePartonUIConfig().graphql;
+  const { jtdSchema } = usePartonUIConfig().graphql;
   const q = processDoc(query, jtdSchema);
   const [mutation, mutationData] = useApolloMutation(q.__cache);
-  return [(options: any) => {
-    let opts = {
-      ...options,
-    };
-    if (options.variables) {
-      opts.variables = cleanVariables(q.__meta, jtdSchema, options.variables);
-      console.log("opts", opts, jtdSchema);
-    }
-    return mutation(opts);
-  }, mutationData];
+  return [
+    (options: any) => {
+      let opts = {
+        ...options,
+      };
+      if (options.variables) {
+        opts.variables = cleanVariables(q.__meta, jtdSchema, options.variables);
+        console.log("opts", opts, jtdSchema);
+      }
+      return mutation(opts);
+    },
+    mutationData,
+  ];
 }
 
-export function useQuery(query: DocumentNode , options?: QueryHookOptions<any>) {
-   const {jtdSchema} = usePartonUIConfig().graphql;
+export function useQuery(query: DocumentNode, options?: QueryHookOptions<any>) {
+  const { jtdSchema } = usePartonUIConfig().graphql;
   const q = processDoc(query, jtdSchema);
   let variables;
   if (options?.variables) {
@@ -65,39 +72,46 @@ export function useQuery(query: DocumentNode , options?: QueryHookOptions<any>) 
   });
 }
 
-
-export function useLazyQuery(query: DocumentNode, options: LazyQueryHookOptions<any>) {
-   const {jtdSchema} = usePartonUIConfig().graphql;
+export function useLazyQuery(
+  query: DocumentNode,
+  options: LazyQueryHookOptions<any>,
+) {
+  const { jtdSchema } = usePartonUIConfig().graphql;
   const q = processDoc(query, jtdSchema);
   if (!q.__cache) {
     throw new Error("Query was not processed correctly");
   }
   const [func, results] = useApolloLazyQuery(q.__cache, options);
-  return [(opts: any) => {
-    let variables;
-    if (opts?.variables) {
-      variables = cleanVariables(q.__meta, jtdSchema, opts.variables);
-    }
-    return func({
-      ...opts,
-      variables,
-    });
-  }, results];
+  return [
+    (opts: any) => {
+      let variables;
+      if (opts?.variables) {
+        variables = cleanVariables(q.__meta, jtdSchema, opts.variables);
+      }
+      return func({
+        ...opts,
+        variables,
+      });
+    },
+    results,
+  ];
 }
 export function useApolloClientQuery() {
-   const {jtdSchema} = usePartonUIConfig().graphql;
+  const { jtdSchema } = usePartonUIConfig().graphql;
 
   const apolloClient = useApolloClient();
-  return [(opts: any) => {
-    const q = processDoc(opts.query, jtdSchema);
-    let variables;
-    if (opts?.variables) {
-      variables = cleanVariables(q.__meta, jtdSchema, opts.variables);
-    }
-    return apolloClient.query({
-      ...opts,
-      query: q.__cache,
-      variables,
-    });
-  }];
+  return [
+    (opts: any) => {
+      const q = processDoc(opts.query, jtdSchema);
+      let variables;
+      if (opts?.variables) {
+        variables = cleanVariables(q.__meta, jtdSchema, opts.variables);
+      }
+      return apolloClient.query({
+        ...opts,
+        query: q.__cache,
+        variables,
+      });
+    },
+  ];
 }
