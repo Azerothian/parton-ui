@@ -92,6 +92,9 @@ importers:
       prettier:
         specifier: ^3.3.3
         version: 3.3.3
+      rollup-plugin-node-externals:
+        specifier: ^7.1.2
+        version: 7.1.2(rollup@4.18.1)
       sass:
         specifier: ^1.77.8
         version: 1.77.8
@@ -3246,6 +3249,15 @@ packages:
     deprecated: Rimraf versions prior to v4 are no longer supported
     hasBin: true
 
+  rollup-plugin-node-externals@7.1.2:
+    resolution:
+      {
+        integrity: sha512-cVJFKs+ulZxpMmn/s+oi431d93Jq5+G7Sc5ixWDrL2k+Gj+MqXg0KMNWgKf8Mw5qpaG4jVDpsvuqFfiCvRcGeA==,
+      }
+    engines: { node: ">= 21 || ^20.6.0 || ^18.19.0" }
+    peerDependencies:
+      rollup: ^3.0.0 || ^4.0.0
+
   rollup@4.18.1:
     resolution:
       {
@@ -5995,6 +6007,10 @@ snapshots:
   rimraf@3.0.2:
     dependencies:
       glob: 7.2.3
+
+  rollup-plugin-node-externals@7.1.2(rollup@4.18.1):
+    dependencies:
+      rollup: 4.18.1
 
   rollup@4.18.1:
     dependencies:

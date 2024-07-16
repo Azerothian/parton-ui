@@ -1,6 +1,8 @@
 import { expect, it, describe } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import { act } from "react";
+import "@testing-library/jest-dom/vitest";
+import "vitest-fetch-mock";
 
 import PartonUIConfigManager, {
   configDefaults,
