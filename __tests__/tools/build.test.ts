@@ -1,17 +1,7 @@
 import { vi, expect, it, describe, beforeEach } from "vitest";
 import { createFsFromVolume, vol } from "memfs";
-import { buildComponentsFile } from "../../src/tools/build.ts";
+import { buildComponentsFile } from "../../src/tools/build";
 import path from "path";
-
-const buildOutput = `
-/* eslint-disable camelcase */
-/* eslint-disable eol-last */
-import React from "react";
-
-export default {
-  "/prefix/components/main": React.lazy(() => import("./prefix/components/main")),
-};
-`;
 
 const fs = createFsFromVolume(vol);
 
@@ -21,11 +11,10 @@ vi.mock("node:fs/promises", () => ({
 }));
 
 vi.mock("globby", () => ({
-  globby: async () => {
-    return ["components/", "components/main.tsx"];
+  globby: () => {
+    return Promise.resolve(["components/", "components/main.tsx"]);
   },
 }));
-// vi.mock('fs/promises');
 
 describe("tools/build", () => {
   beforeEach(() => {

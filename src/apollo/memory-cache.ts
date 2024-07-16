@@ -99,37 +99,41 @@ export function createMemoryCacheFromJTDSchema(jtdSchema: IJtdMinRoot) {
         fields: Object.keys(jtdSchema.def.QueryModels?.p ?? []).reduce(
           (o, keyName) => {
             // added a lot of null checks here, not sure on performance hit? (had to for typescript)
-
-            if (!jtdSchema?.def?.QueryModels?.p?.[keyName].ref) {
-              throw new Error("Invalid JTD Schema");
+            const listRef = jtdSchema?.def?.QueryModels?.p?.[keyName]?.ref;
+            if (!listRef) {
+              throw new Error(
+                `Invalid JTD Schema - could not find list reference for ${keyName}`,
+              );
             }
 
-            const listDef =
-              jtdSchema.def[jtdSchema.def.QueryModels.p[keyName].ref];
-            if (!listDef.p?.edges?.el?.ref) {
-              throw new Error("Invalid JTD Schema");
+            const edgesRef = jtdSchema.def?.[listRef].p?.edges?.el?.ref;
+            if (!edgesRef) {
+              throw new Error(
+                `Invalid JTD Schema - could not find edges reference for ${keyName} - ${listRef}`,
+              );
             }
-            const edgesDef = jtdSchema.def[listDef.p.edges.el.ref];
-            if (!edgesDef.p?.node.ref) {
-              throw new Error("Invalid JTD Schema");
+            const nodeRef = jtdSchema.def?.[edgesRef]?.p?.node?.ref;
+            if (!nodeRef) {
+              throw new Error(
+                `Invalid JTD Schema - could not find node reference for ${keyName} - ${edgesRef}`,
+              );
             }
-            const nodeDef = jtdSchema.def[edgesDef.p.node.ref];
-            if (!nodeDef.p) {
-              throw new Error("Invalid JTD Schema");
+            const nodeProperties = jtdSchema.def?.[nodeRef]?.p ?? {};
+            if (!nodeProperties) {
+              throw new Error(
+                `Invalid JTD Schema - could not find node reference for ${keyName} - ${nodeRef}`,
+              );
             }
             o[keyName] = {
               ...relayPage,
               fields: {
                 edges: {
                   node: {
-                    ...Object.keys(nodeDef.p)
+                    ...Object.keys(nodeProperties)
                       .map((fieldName) => {
-                        if (!nodeDef.p || !jtdSchema?.def) {
-                          throw new Error("Invalid JTD Schema");
-                        }
-                        const e = nodeDef.p[fieldName];
+                        const e = nodeProperties[fieldName];
                         if (e.ref) {
-                          const targetEl = jtdSchema.def[e.ref];
+                          const targetEl = jtdSchema.def?.[e.ref];
                           if (targetEl?.p?.edges) {
                             return relayPage;
                           }

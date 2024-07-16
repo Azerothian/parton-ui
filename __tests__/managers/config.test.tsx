@@ -1,23 +1,16 @@
-import { vi, expect, it, describe, beforeEach } from "vitest";
+import { expect, it, describe } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { act } from "react";
-// import { userEvent } from "@testing-library/user-event";
-// import Link from "../components/Link.jsx";
-import React from "react";
 
 import PartonUIConfigManager, {
   configDefaults,
 } from "../../src/managers/config";
 describe("managers/config", () => {
-  it("loading of jdt schema", async () => {
-    vi.stubGlobal("fetch", (target: string) => {
-      expect(target).toBe("/graphql.jdt");
-
-      return new Promise((resolve) => {
-        return resolve({
-          json: () => Promise.resolve({}),
-        });
-      });
+  it("loading of jdt schema", () => {
+    fetchMock.mockOnceIf("/graphql.jdt", () => {
+      return {
+        body: JSON.stringify({}),
+      };
     });
     act(() => {
       render(

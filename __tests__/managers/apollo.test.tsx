@@ -1,31 +1,47 @@
-import { vi, expect, it, describe, beforeEach, test } from "vitest";
+import { expect, it, describe } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { act } from "react";
-// import { userEvent } from "@testing-library/user-event";
-// import Link from "../components/Link.jsx";
-import React from "react";
+import "vitest-fetch-mock";
 
 import PartonUIConfigManager, {
   configDefaults,
 } from "../../src/managers/config";
 import ApolloManager from "../../src/managers/apollo";
 describe("managers/apollo", () => {
-  // beforeEach(() => {
-  //   // reset the state of in-memory fs
-  //   vol.reset();
-  // });
-  it("loading of jdt schema", async () => {
-    vi.stubGlobal("fetch", (target) => {
-      switch (target) {
-        case "/graphql.jdt":
-          return Promise.resolve({
-            json: () => act(() => Promise.resolve({})),
-          });
-        default:
-          return Promise.resolve({
-            json: () => act(() => Promise.resolve({})),
-          });
-      }
+  it("loading of jdt schema", () => {
+    fetchMock.mockOnceIf("/graphql.jdt", () => {
+      return {
+        body: JSON.stringify({
+          def: {
+            User: {
+              p: {},
+            },
+            UserEdge: {
+              p: {
+                node: {
+                  ref: "User",
+                },
+              },
+            },
+            UserList: {
+              p: {
+                edges: {
+                  el: {
+                    ref: "UserEdge",
+                  },
+                },
+              },
+            },
+            QueryModels: {
+              p: {
+                User: {
+                  ref: "UserList",
+                },
+              },
+            },
+          },
+        }),
+      };
     });
     act(() => {
       render(
