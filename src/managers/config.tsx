@@ -69,12 +69,14 @@ export default function PartonUIConfigManager(
     props.config.graphql.jtdSchema,
   );
   useEffect(() => {
-    fetch(
-      `${config.endpoint.host}${config.endpoint.jdtPath}`,
-      config.endpoint.options,
-    )
-      .then((response) => response.json())
-      .then((data) => setJdtSchema(data));
+    setJdtSchema({});
+    // fetch(
+    //   `${config.endpoint.host}${config.endpoint.jdtPath}`,
+    //   config.endpoint.options,
+    // )
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //   });
   }, [config.endpoint.host, config.endpoint.jdtPath]);
   const { Loader } = config.controls;
   if (!jdtSchema) {

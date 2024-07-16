@@ -9,17 +9,14 @@ import PartonUIConfigManager, {
   configDefaults,
 } from "../../src/managers/config";
 describe("managers/config", () => {
-  // beforeEach(() => {
-  //   // reset the state of in-memory fs
-  //   vol.reset();
-  // });
   it("loading of jdt schema", async () => {
-    vi.stubGlobal("fetch", (target) => {
+    vi.stubGlobal("fetch", (target: string) => {
       expect(target).toBe("/graphql.jdt");
-      return Promise.resolve({
-        json: () => {
-          act(() => Promise.resolve({}));
-        },
+
+      return new Promise((resolve) => {
+        return resolve({
+          json: () => Promise.resolve({}),
+        });
       });
     });
     act(() => {

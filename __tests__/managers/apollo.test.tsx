@@ -1,4 +1,4 @@
-import { vi, expect, it, describe, beforeEach } from "vitest";
+import { vi, expect, it, describe, beforeEach, test } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { act } from "react";
 // import { userEvent } from "@testing-library/user-event";
@@ -18,13 +18,9 @@ describe("managers/apollo", () => {
     vi.stubGlobal("fetch", (target) => {
       switch (target) {
         case "/graphql.jdt":
-          return () =>
-            Promise.resolve({
-              json: () =>
-                Promise.resolve({
-                  def: {},
-                }),
-            });
+          return Promise.resolve({
+            json: () => act(() => Promise.resolve({})),
+          });
         default:
           return Promise.resolve({
             json: () => act(() => Promise.resolve({})),
