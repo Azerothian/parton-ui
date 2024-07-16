@@ -65,7 +65,7 @@ export function createBasicMemoryCache() {
 
 export function createMemoryCacheFromJTDSchema(jtdSchema: IJtdMinRoot) {
   if (!jtdSchema?.def) {
-    throw new Error("Invalid JTD Schema");
+    throw new Error("Invalid JTD Schema - Missing definition");
   }
 
   const relayPage = relayStylePagination(() => {

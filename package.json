@@ -46,7 +46,7 @@
     "@vitejs/plugin-react-swc": "^3.7.0",
     "@vitest/ui": "^2.0.3",
     "@vostro/jtd-types": "^1.0.2",
-    "eslint": "^9.7.0",
+    "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
     "eslint-plugin-react": "^7.34.4",
