@@ -61,6 +61,14 @@ describe("tools/build", () => {
       "/project/src/component.ts",
       "utf-8",
     );
-    expect(content).toBe(buildOutput);
+    expect(content).toBe(`
+/* eslint-disable camelcase */
+/* eslint-disable eol-last */
+import React from "react";
+
+export default {
+  "/prefix/components/main": React.lazy(() => import("./prefix/components/main")),
+};
+`);
   });
 });

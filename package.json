@@ -11,7 +11,7 @@
     "build-no-pretty": "rm -Rf ./lib || true && tsc -b ",
     "lint": "pnpm run pretty && pnpm run lint-no-pretty",
     "lint-no-pretty": "eslint ./src/ --ext ts,tsx --report-unused-disable-directives",
-    "pretty": "prettier ./src/ --write --ignore-unknown",
+    "pretty": "prettier . --write --ignore-unknown",
     "test": "pnpm run pretty && pnpm run test-no-pretty",
     "test-no-pretty": "vitest --run",
     "watch": "pnpm run pretty && vitest",
