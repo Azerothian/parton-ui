@@ -4,7 +4,7 @@ import { usePartonUIConfig } from "../managers/config";
 
 export default function Placeholder(props: any) {
   const { page, name, ...restTopLevel } = props;
-  const { components } = usePartonUIConfig();
+  const { sublayouts: components } = usePartonUIConfig();
   const placeHolderProps = props.props;
   return (page.sublayouts || [])
     .filter((sl: { placeholder: string }) => sl.placeholder === name)

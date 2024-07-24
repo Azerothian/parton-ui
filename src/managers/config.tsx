@@ -26,7 +26,7 @@ export interface PartonUIConfig {
     F404: React.ComponentType;
     Loader: React.ComponentType;
   };
-  components: LayoutCollection;
+  sublayouts: LayoutCollection;
   layouts: LayoutCollection;
   graphql: PartonUIConfigGraphQL;
 }
@@ -37,7 +37,7 @@ export const configDefaults: PartonUIConfig = {
     path: "graphql.api",
     jdtPath: "graphql.jdt",
   },
-  components: {},
+  sublayouts: {},
   layouts: {},
   controls: {
     F404: Default404,
