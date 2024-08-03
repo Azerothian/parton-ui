@@ -7,7 +7,11 @@ import {
   NormalizedCacheObject,
 } from "@apollo/client";
 import { IJtdMinRoot } from "@vostro/jtd-types";
-export type LayoutCollection = Record<string, React.ComponentType>;
+export type LayoutCollection = Record<
+  string,
+  React.ComponentType | React.LazyExoticComponent<any>
+>;
+
 export interface PartonUIConfigGraphQL {
   // loadJtd: boolean;
   jtdSchema: IJtdMinRoot | undefined;
