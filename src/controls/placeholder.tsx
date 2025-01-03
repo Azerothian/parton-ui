@@ -1,11 +1,17 @@
-import { Suspense } from "react";
+import React, { Suspense } from "react";
 import Loader from "../controls/loader";
 import { usePartonUIConfig } from "../managers/config";
+import { usePage } from "../managers/page";
 
 export default function Placeholder(props: any) {
-  const { page, name, ...restTopLevel } = props;
+  const { name, ...restTopLevel } = props;
   const { sublayouts: components } = usePartonUIConfig();
+  const { page } = usePage();
   const placeHolderProps = props.props;
+  if (!page) {
+    return <React.Fragment />;
+  }
+
   return (page.sublayouts || [])
     .filter((sl: { placeholder: string }) => sl.placeholder === name)
     .map((sl: { path: string; props: any }, i: number) => {

@@ -6,7 +6,26 @@ import { useQuery } from "../data";
 import { getPageQuery, getPageQueryResult } from "../logic/page";
 // export interface PageProps {}
 
-export const PageContext = React.createContext({
+export interface Page {
+  id: string;
+  name: string;
+  displayName: string;
+  webPath: string;
+  values: any;
+  layout: {
+    path: string;
+  };
+  sublayouts: {
+    path: string;
+    placeholder: string;
+    index: number;
+    props: any;
+  }[];
+}
+
+export const PageContext = React.createContext<{
+  page: Page | undefined;
+}>({
   page: undefined,
 });
 export const PageProvider = PageContext.Provider;
