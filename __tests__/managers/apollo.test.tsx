@@ -10,41 +10,42 @@ import PartonUIConfigManager, {
 import ApolloManager from "../../src/managers/apollo";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from "react";
+import { CborEncoder } from "@jsonjoy.com/json-pack/lib/cbor";
 describe("managers/apollo", () => {
   it("loading of jdt schema", async () => {
-    fetchMock.mockOnceIf("/graphql.jdt", () => {
-      return {
-        body: JSON.stringify({
-          def: {
-            User: {
-              p: {},
-            },
-            UserEdge: {
-              p: {
-                node: {
-                  ref: "User",
-                },
+    fetchMock.mockOnceIf("http://localhost/graphql.jdt", (request) => {
+      const encoder = new CborEncoder();
+      const val = encoder.encode({
+        def: {
+          User: {
+            p: {},
+          },
+          UserEdge: {
+            p: {
+              node: {
+                ref: "User",
               },
             },
-            UserList: {
-              p: {
-                edges: {
-                  el: {
-                    ref: "UserEdge",
-                  },
-                },
-              },
-            },
-            QueryModels: {
-              p: {
-                User: {
-                  ref: "UserList",
+          },
+          UserList: {
+            p: {
+              edges: {
+                el: {
+                  ref: "UserEdge",
                 },
               },
             },
           },
-        }),
-      };
+          QueryModels: {
+            p: {
+              User: {
+                ref: "UserList",
+              },
+            },
+          },
+        },
+      });
+      return new Response(val);
     });
     act(() => {
       render(

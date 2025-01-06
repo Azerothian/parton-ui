@@ -9,13 +9,14 @@ import PartonUIConfigManager, {
 } from "../../src/managers/config";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from "react";
+import { CborEncoder } from "@jsonjoy.com/json-pack/lib/cbor";
 
 describe("managers/config", () => {
   it("loading of jdt schema", async () => {
-    fetchMock.mockOnceIf("/graphql.jdt", () => {
-      return {
-        body: JSON.stringify({}),
-      };
+    fetchMock.mockOnceIf("http://localhost/graphql.jdt", () => {
+      const encoder = new CborEncoder();
+      const val = encoder.encode({});
+      return new Response(val);
     });
     act(() => {
       render(

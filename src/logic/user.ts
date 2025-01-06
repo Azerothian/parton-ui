@@ -37,13 +37,7 @@ export const resetPasswordMutation = gql`
 `;
 
 export function getCurrentUserResult(result: any) {
-  if (result?.data?.classMethods?.User) {
-    return {
-      user: result.data.classMethods.User.getCurrentUser,
-      schema: result.data.classMethods.User.getCurrentUser.permissions,
-    };
-  }
-  return {};
+  return result?.data?.classMethods?.User?.getCurrentUser;
 }
 
 export const getCurrentUserQuery = gql`
@@ -76,7 +70,7 @@ export const getCurrentUserQueryOptions = {
     if (loading) {
       return Object.assign({}, ownProps, { loading });
     }
-    let user, role, schema;
+    let user, role;
     if (classMethods?.User?.getCurrentUser) {
       user = classMethods.User.getCurrentUser;
       role = user.role.name;
@@ -85,7 +79,6 @@ export const getCurrentUserQueryOptions = {
       loading: loading || ownProps.loading,
       user,
       role,
-      schema,
     });
   },
 };

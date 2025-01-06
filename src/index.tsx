@@ -51,8 +51,8 @@ export { PartonUIConfigContext, usePartonUIConfig };
 import ApolloManager from "./managers/apollo";
 export { ApolloManager };
 
-import { AuthManager, AuthRedirect, useAuth } from "./managers/auth";
-export { AuthManager, AuthRedirect, useAuth };
+import { AuthManager, useAuth } from "./managers/auth";
+export { AuthManager, useAuth };
 
 import BaseManager from "./managers/base";
 export { BaseManager };

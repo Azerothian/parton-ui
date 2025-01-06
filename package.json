@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.10.8",
+    "@jsonjoy.com/json-pack": "^1.1.1",
     "@vostro/clean-gql": "^1.0.15",
     "graphql": "^16.9.0",
     "react": "^18.3.1",
@@ -28,7 +29,7 @@
     "react-router-dom": "^6.24.1"
   },
   "peerDependencies": {
-    "@apollo/client": "^3.10.8",
+    "@apollo/client": "^3.12.4",
     "@vostro/clean-gql": "^1.0.15",
     "graphql": "^16.9.0",
     "react": "^18.3.1",
@@ -65,6 +66,6 @@
     "vite": "^5.3.3",
     "vite-plugin-dts": "^3.9.1",
     "vitest": "^2.0.3",
-    "vitest-fetch-mock": "^0.3.0"
+    "vitest-fetch-mock": "^0.4.3"
   }
 }

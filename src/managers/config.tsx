@@ -7,6 +7,8 @@ import {
   NormalizedCacheObject,
 } from "@apollo/client";
 import { IJtdMinRoot } from "@vostro/jtd-types";
+
+import { CborDecoder } from "@jsonjoy.com/json-pack/lib/cbor/index";
 export type LayoutCollection = Record<
   string,
   React.ComponentType | React.LazyExoticComponent<any>
@@ -37,7 +39,7 @@ export interface PartonUIConfig {
 
 export const configDefaults: PartonUIConfig = {
   endpoint: {
-    host: "/",
+    host: "http://localhost/",
     path: "graphql.api",
     jdtPath: "graphql.jdt",
   },
@@ -73,14 +75,17 @@ export default function PartonUIConfigManager(
     props.config.graphql.jtdSchema,
   );
   useEffect(() => {
-    void fetch(
-      `${config.endpoint.host}${config.endpoint.jdtPath}`,
-      config.endpoint.options,
-    )
-      .then((response) => response.json())
-      .then((data: IJtdMinRoot | undefined) => {
-        setJdtSchema(data);
-      });
+    void (async () => {
+      const response = await fetch(
+        `${config.endpoint.host}${config.endpoint.jdtPath}`,
+        config.endpoint.options,
+      );
+      const blob = await response.blob();
+      const arr = new Uint8Array(await blob.arrayBuffer());
+      const decoder = new CborDecoder();
+      const data = decoder.decode(arr) as IJtdMinRoot;
+      setJdtSchema(data);
+    })();
   }, [config.endpoint.host, config.endpoint.jdtPath, config.endpoint.options]);
   const { Loader } = config.controls;
   if (!jdtSchema) {

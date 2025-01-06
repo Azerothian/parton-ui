@@ -10,6 +10,9 @@ importers:
       "@apollo/client":
         specifier: ^3.10.8
         version: 3.10.8(@types/react@18.3.3)(graphql@16.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      "@jsonjoy.com/json-pack":
+        specifier: ^1.1.1
+        version: 1.1.1(tslib@2.6.3)
       "@vostro/clean-gql":
         specifier: ^1.0.15
         version: 1.0.15(@vostro/jtd-types@1.0.2)(graphql@16.9.0)
@@ -28,7 +31,7 @@ importers:
     devDependencies:
       "@testing-library/jest-dom":
         specifier: ^6.4.6
-        version: 6.4.6(vitest@2.0.3(@types/node@20.14.10)(@vitest/ui@2.0.3)(jsdom@24.1.0)(sass@1.77.8))
+        version: 6.4.6(vitest@2.0.3)
       "@testing-library/react":
         specifier: ^16.0.0
         version: 16.0.0(@testing-library/dom@10.3.1)(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -114,8 +117,8 @@ importers:
         specifier: ^2.0.3
         version: 2.0.3(@types/node@20.14.10)(@vitest/ui@2.0.3)(jsdom@24.1.0)(sass@1.77.8)
       vitest-fetch-mock:
-        specifier: ^0.3.0
-        version: 0.3.0(vitest@2.0.3(@types/node@20.14.10)(@vitest/ui@2.0.3)(jsdom@24.1.0)(sass@1.77.8))
+        specifier: ^0.4.3
+        version: 0.4.3(vitest@2.0.3)
 
 packages:
   "@adobe/css-tools@4.4.0":
@@ -511,10 +514,10 @@ packages:
     peerDependencies:
       tslib: "2"
 
-  "@jsonjoy.com/json-pack@1.0.4":
+  "@jsonjoy.com/json-pack@1.1.1":
     resolution:
       {
-        integrity: sha512-aOcSN4MeAtFROysrbqG137b7gaDDSmVrl5mpo6sT/w+kcXpWnzhMjmY/Fh/sDx26NBxyIE7MB1seqLeCAzy9Sg==,
+        integrity: sha512-osjeBqMJ2lb/j/M8NCPjs1ylqWIcTRTycIhVB5pt6LgzgeRSb0YRZ7j9RfA8wIUrsr/medIuhVyonXRZWLyfdw==,
       }
     engines: { node: ">=10.0" }
     peerDependencies:
@@ -1541,12 +1544,6 @@ packages:
     resolution:
       {
         integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==,
-      }
-
-  cross-fetch@4.0.0:
-    resolution:
-      {
-        integrity: sha512-e4a5N8lVvuLgAWgnCrLr2PP0YyDOTHa9H/Rj54dirp61qXnNq46m82bRhNqIA5VccJtWBvPTFRV3TtvHUKPB1g==,
       }
 
   cross-spawn@7.0.3:
@@ -2806,18 +2803,6 @@ packages:
         integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==,
       }
 
-  node-fetch@2.7.0:
-    resolution:
-      {
-        integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==,
-      }
-    engines: { node: 4.x || >=6.0.0 }
-    peerDependencies:
-      encoding: ^0.1.0
-    peerDependenciesMeta:
-      encoding:
-        optional: true
-
   normalize-path@3.0.0:
     resolution:
       {
@@ -3635,12 +3620,6 @@ packages:
       }
     engines: { node: ">=6" }
 
-  tr46@0.0.3:
-    resolution:
-      {
-        integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==,
-      }
-
   tr46@5.0.0:
     resolution:
       {
@@ -3849,12 +3828,12 @@ packages:
       terser:
         optional: true
 
-  vitest-fetch-mock@0.3.0:
+  vitest-fetch-mock@0.4.3:
     resolution:
       {
-        integrity: sha512-g6upWcL8/32fXL43/5f4VHcocuwQIi9Fj5othcK9gPO8XqSEGtnIZdenr2IaipDr61ReRFt+vaOEgo8jiUUX5w==,
+        integrity: sha512-PhuEh+9HCsXFMRPUJilDL7yVDFufoxqk7ze+CNks64UGlfFXaJTn1bLABiNlEc0u25RERXQGj0Tm+M9i6UY9HQ==,
       }
-    engines: { node: ">=14.14.0" }
+    engines: { node: ">=18.0.0" }
     peerDependencies:
       vitest: ">=2.0.0"
 
@@ -3908,12 +3887,6 @@ packages:
       }
     engines: { node: ">=18" }
 
-  webidl-conversions@3.0.1:
-    resolution:
-      {
-        integrity: sha512-2JAn3z8AR6rjK8Sm8orRC0h/bcl/DqL7tRPdGZ4I1CjdF+EaMLmYxBHyXuKL849eucPFhvBoxMsflfOb8kxaeQ==,
-      }
-
   webidl-conversions@7.0.0:
     resolution:
       {
@@ -3941,12 +3914,6 @@ packages:
         integrity: sha512-1lfMEm2IEr7RIV+f4lUNPOqfFL+pO+Xw3fJSqmjX9AbXcXcYOkCe1P6+9VBZB6n94af16NfZf+sSk0JCBZC9aw==,
       }
     engines: { node: ">=18" }
-
-  whatwg-url@5.0.0:
-    resolution:
-      {
-        integrity: sha512-saE57nupxk6v3HY35+jzBwYa0rKSy0XR8JSxZPwgLr7ys0IBzhGviA1/TUGJLmSVqs8pb9AnvICXEuOHLprYTw==,
-      }
 
   which-boxed-primitive@1.0.2:
     resolution:
@@ -4255,7 +4222,7 @@ snapshots:
     dependencies:
       tslib: 2.6.3
 
-  "@jsonjoy.com/json-pack@1.0.4(tslib@2.6.3)":
+  "@jsonjoy.com/json-pack@1.1.1(tslib@2.6.3)":
     dependencies:
       "@jsonjoy.com/base64": 1.1.2(tslib@2.6.3)
       "@jsonjoy.com/util": 1.2.0(tslib@2.6.3)
@@ -4473,7 +4440,7 @@ snapshots:
       lz-string: 1.5.0
       pretty-format: 27.5.1
 
-  "@testing-library/jest-dom@6.4.6(vitest@2.0.3(@types/node@20.14.10)(@vitest/ui@2.0.3)(jsdom@24.1.0)(sass@1.77.8))":
+  "@testing-library/jest-dom@6.4.6(vitest@2.0.3)":
     dependencies:
       "@adobe/css-tools": 4.4.0
       "@babel/runtime": 7.24.8
@@ -4938,12 +4905,6 @@ snapshots:
   computeds@0.0.1: {}
 
   concat-map@0.0.1: {}
-
-  cross-fetch@4.0.0:
-    dependencies:
-      node-fetch: 2.7.0
-    transitivePeerDependencies:
-      - encoding
 
   cross-spawn@7.0.3:
     dependencies:
@@ -5728,7 +5689,7 @@ snapshots:
 
   memfs@4.9.3:
     dependencies:
-      "@jsonjoy.com/json-pack": 1.0.4(tslib@2.6.3)
+      "@jsonjoy.com/json-pack": 1.1.1(tslib@2.6.3)
       "@jsonjoy.com/util": 1.2.0(tslib@2.6.3)
       tree-dump: 1.0.2(tslib@2.6.3)
       tslib: 2.6.3
@@ -5773,10 +5734,6 @@ snapshots:
   nanoid@3.3.7: {}
 
   natural-compare@1.4.0: {}
-
-  node-fetch@2.7.0:
-    dependencies:
-      whatwg-url: 5.0.0
 
   normalize-path@3.0.0: {}
 
@@ -6237,8 +6194,6 @@ snapshots:
       universalify: 0.2.0
       url-parse: 1.5.10
 
-  tr46@0.0.3: {}
-
   tr46@5.0.0:
     dependencies:
       punycode: 2.3.1
@@ -6376,12 +6331,9 @@ snapshots:
       fsevents: 2.3.3
       sass: 1.77.8
 
-  vitest-fetch-mock@0.3.0(vitest@2.0.3(@types/node@20.14.10)(@vitest/ui@2.0.3)(jsdom@24.1.0)(sass@1.77.8)):
+  vitest-fetch-mock@0.4.3(vitest@2.0.3):
     dependencies:
-      cross-fetch: 4.0.0
       vitest: 2.0.3(@types/node@20.14.10)(@vitest/ui@2.0.3)(jsdom@24.1.0)(sass@1.77.8)
-    transitivePeerDependencies:
-      - encoding
 
   vitest@2.0.3(@types/node@20.14.10)(@vitest/ui@2.0.3)(jsdom@24.1.0)(sass@1.77.8):
     dependencies:
@@ -6433,8 +6385,6 @@ snapshots:
     dependencies:
       xml-name-validator: 5.0.0
 
-  webidl-conversions@3.0.1: {}
-
   webidl-conversions@7.0.0: {}
 
   whatwg-encoding@3.1.1:
@@ -6447,11 +6397,6 @@ snapshots:
     dependencies:
       tr46: 5.0.0
       webidl-conversions: 7.0.0
-
-  whatwg-url@5.0.0:
-    dependencies:
-      tr46: 0.0.3
-      webidl-conversions: 3.0.1
 
   which-boxed-primitive@1.0.2:
     dependencies:
