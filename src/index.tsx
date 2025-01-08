@@ -10,7 +10,7 @@ import {
   resetPasswordMutation,
   getCurrentUserResult,
   getCurrentUserQuery,
-  getCurrentUserQueryOptions,
+  // getCurrentUserQueryOptions,
 } from "./logic/user";
 export {
   getRolesQuery,
@@ -18,22 +18,22 @@ export {
   resetPasswordMutation,
   getCurrentUserResult,
   getCurrentUserQuery,
-  getCurrentUserQueryOptions,
+  // getCurrentUserQueryOptions,
 };
 
 import {
-  getPageWithChildrenQuery,
-  getPageWithChildrenResult,
+  // getPageWithChildrenQuery,
+  // getPageWithChildrenResult,
   getPageQuery,
   getPageQueryResult,
-  getPageQueryOptions,
+  // getPageQueryOptions,
 } from "./logic/page";
 export {
-  getPageWithChildrenQuery,
-  getPageWithChildrenResult,
+  // getPageWithChildrenQuery,
+  // getPageWithChildrenResult,
   getPageQuery,
   getPageQueryResult,
-  getPageQueryOptions,
+  // getPageQueryOptions,
 };
 
 import FileNotFound from "./controls/f404";
@@ -45,8 +45,11 @@ export { Placeholder };
 import Loader from "./controls/loader";
 export { Loader };
 
-import { PartonUIConfigContext, usePartonUIConfig } from "./managers/config";
-export { PartonUIConfigContext, usePartonUIConfig };
+import PartonUIConfigManager, {
+  PartonUIConfigContext,
+  usePartonUIConfig,
+} from "./managers/config";
+export { PartonUIConfigContext, usePartonUIConfig, PartonUIConfigManager };
 
 import ApolloManager from "./managers/apollo";
 export { ApolloManager };
@@ -64,3 +67,6 @@ import {
   useApolloClientQuery,
 } from "./data";
 export { useQuery, useMutation, useLazyQuery, useApolloClientQuery };
+
+import Page, { usePage } from "./managers/page";
+export { Page, usePage };

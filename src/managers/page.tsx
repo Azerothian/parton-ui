@@ -4,7 +4,6 @@ import { useLocation } from "react-router-dom";
 import { PartonUIConfigContext } from "./config";
 import { useQuery } from "../data";
 import { getPageQuery, getPageQueryResult } from "../logic/page";
-// export interface PageProps {}
 
 export interface Page {
   id: string;
@@ -30,47 +29,6 @@ export const PageContext = React.createContext<{
 });
 export const PageProvider = PageContext.Provider;
 export const PageConsumer = PageContext.Consumer;
-
-// export const getPageQuery = gql`
-//   query getPage($uri: String!) {
-//     getPage(uri: $uri) {
-//       id
-//       name
-//       displayName
-//       values
-//       webPath
-//       props
-//       layout {
-//         id
-//         path
-//         props
-//       }
-//       sublayouts {
-//         id
-//         path
-//         props
-//       }
-//     }
-//   }
-// `;
-// export const getPageQueryOptions = {
-//   props(info: any) {
-//     const { ownProps, data } = info;
-//     const { loading, getPage } = data;
-//     if (loading) {
-//       return Object.assign({}, ownProps, { loading });
-//     }
-//     return Object.assign({}, ownProps, { page: getPage });
-//   },
-// };
-
-// export function getPageQueryResult(result: any) {
-//   let data = result.data;
-//   if (!data) {
-//     data = result.previousData;
-//   }
-//   return data?.getPage;
-// }
 
 export default function Page() {
   const location = useLocation();

@@ -6,40 +6,33 @@ import { createMemoryCacheFromJTDSchema } from "../apollo/memory-cache";
 
 export default function ApolloManager(props: React.PropsWithChildren<any>) {
   const config = useContext(PartonUIConfigContext);
-  let client = config.graphql?.apolloClient;
+  let client = undefined;
   if (!client) {
     if (!config.graphql?.jtdSchema) {
       throw new Error("JTD Schema not loaded");
     }
-    const { cache, link, defaultOptions, ...apolloConfig } =
-      config.graphql?.apolloConfig ?? {};
+    const cache = createMemoryCacheFromJTDSchema(config.graphql.jtdSchema);
+    const link = new BatchHttpLink({
+      credentials: config.endpoint.options?.credentials ?? "same-origin",
+      headers: config.endpoint.options?.headers as Record<string, string>,
+      uri: `${config.endpoint.host}${config.endpoint.path}`,
+    });
     client = new ApolloClient({
-      cache: cache
-        ? cache
-        : createMemoryCacheFromJTDSchema(config.graphql.jtdSchema),
-      link: link
-        ? link
-        : new BatchHttpLink({
-            credentials: config.endpoint.options?.credentials ?? "same-origin",
-            headers: config.endpoint.options?.headers as Record<string, string>,
-            uri: `${config.endpoint.host}${config.endpoint.path}`,
-          }),
-      defaultOptions: defaultOptions
-        ? defaultOptions
-        : {
-            watchQuery: {
-              fetchPolicy: "cache-and-network",
-              errorPolicy: "ignore",
-            },
-            query: {
-              fetchPolicy: "cache-first",
-              errorPolicy: "all",
-            },
-            mutate: {
-              errorPolicy: "all",
-            },
-          },
-      ...apolloConfig,
+      cache: cache,
+      link: link,
+      defaultOptions: {
+        watchQuery: {
+          fetchPolicy: "cache-and-network",
+          errorPolicy: "ignore",
+        },
+        query: {
+          fetchPolicy: "cache-first",
+          errorPolicy: "all",
+        },
+        mutate: {
+          errorPolicy: "all",
+        },
+      },
     });
   }
 

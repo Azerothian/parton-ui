@@ -1,11 +1,7 @@
 import React, { useEffect } from "react";
 import { Default404 } from "../controls/f404";
 import { DefaultLoader } from "../controls/loader";
-import {
-  ApolloClient,
-  ApolloClientOptions,
-  NormalizedCacheObject,
-} from "@apollo/client";
+
 import { IJtdMinRoot } from "@vostro/jtd-types";
 
 import { CborDecoder } from "@jsonjoy.com/json-pack/lib/cbor/index";
@@ -17,8 +13,8 @@ export type LayoutCollection = Record<
 export interface PartonUIConfigGraphQL {
   // loadJtd: boolean;
   jtdSchema: IJtdMinRoot | undefined;
-  apolloClient: ApolloClient<any> | undefined;
-  apolloConfig: ApolloClientOptions<NormalizedCacheObject> | undefined;
+  client: any;
+  clientConfig: any;
 }
 
 export interface PartonUIConfig {
@@ -53,8 +49,8 @@ export const configDefaults: PartonUIConfig = {
   graphql: {
     // loadJtd: true,
     jtdSchema: undefined,
-    apolloClient: undefined,
-    apolloConfig: undefined,
+    client: undefined,
+    clientConfig: undefined,
   },
 };
 
