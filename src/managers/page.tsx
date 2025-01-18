@@ -54,7 +54,7 @@ export default function Page() {
     return `Error! ${error.message}`;
   }
   return (
-    <div>
+    <>
       {page ? (
         <PageProvider value={{ page }}>
           <Suspense fallback={<Loader />}>
@@ -64,7 +64,7 @@ export default function Page() {
       ) : !loading ? (
         <F404 />
       ) : undefined}
-    </div>
+    </>
   );
 }
 export function usePage() {
