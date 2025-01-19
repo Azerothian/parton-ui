@@ -35,6 +35,9 @@ importers:
         specifier: ^6.24.1
         version: 6.24.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
     devDependencies:
+      "@azerothian/jtd-types":
+        specifier: ^3.0.0
+        version: 3.0.0
       "@testing-library/jest-dom":
         specifier: ^6.4.6
         version: 6.4.6(vitest@2.0.3)
@@ -65,9 +68,6 @@ importers:
       "@vitest/ui":
         specifier: ^2.0.3
         version: 2.0.3(vitest@2.0.3)
-      "@vostro/jtd-types":
-        specifier: ^1.0.2
-        version: 1.0.2
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
@@ -160,6 +160,12 @@ packages:
         optional: true
       subscriptions-transport-ws:
         optional: true
+
+  "@azerothian/jtd-types@3.0.0":
+    resolution:
+      {
+        integrity: sha512-hW9Xi9DNxrRzbPeRcaNzlI09rnA5miBk/boUQokuBTPOprVpiggULMMPEv2EB8xVNm1ZFjgkX7BYde9KCMrphg==,
+      }
 
   "@babel/code-frame@7.24.7":
     resolution:
@@ -4082,6 +4088,8 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
     transitivePeerDependencies:
       - "@types/react"
+
+  "@azerothian/jtd-types@3.0.0": {}
 
   "@babel/code-frame@7.24.7":
     dependencies:

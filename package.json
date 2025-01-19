@@ -49,7 +49,7 @@
     "@typescript-eslint/parser": "^7.16.0",
     "@vitejs/plugin-react-swc": "^3.7.0",
     "@vitest/ui": "^2.0.3",
-    "@vostro/jtd-types": "^1.0.2",
+    "@azerothian/jtd-types": "^3.0.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Default404 } from "../controls/f404";
 import { DefaultLoader } from "../controls/loader";
 
-import { IJtdMinRoot } from "@vostro/jtd-types";
+import { IJtdMinRoot } from "@azerothian/jtd-types";
 
 import { CborDecoder } from "@jsonjoy.com/json-pack/lib/cbor/index";
 export type LayoutCollection = Record<

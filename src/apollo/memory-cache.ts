@@ -1,6 +1,6 @@
 import { InMemoryCache } from "@apollo/client";
 import { relayStylePagination } from "@apollo/client/utilities";
-import type { IJtdMinRoot } from "@vostro/jtd-types";
+import type { IJtdMinRoot } from "@azerothian/jtd-types";
 
 function merge(existing: any, incoming: any) {
   return {

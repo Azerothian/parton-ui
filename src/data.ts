@@ -19,7 +19,7 @@ import {
   cleanVariables,
 } from "@vostro/clean-gql/lib/jtd-min";
 import { usePartonUIConfig } from "./managers/config";
-import { IJtdMinRoot } from "@vostro/jtd-types";
+import { IJtdMinRoot } from "@azerothian/jtd-types";
 
 // export const CleanGQLContext = createContext();
 export interface OptionalDocumentNode extends DocumentNode {
