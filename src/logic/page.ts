@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from "graphql-tag";
 
 export const getPageQuery = gql`
   query getPage($uri: String!, $level: Int) {

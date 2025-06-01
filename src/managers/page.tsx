@@ -38,7 +38,7 @@ export default function Page() {
     // ...getPageQueryOptions,
     variables: { uri: p },
   });
-  const { loading, error } = result;
+  const { isLoading, error } = result;
 
   const page = getPageQueryResult(result);
   useEffect(() => {
@@ -61,7 +61,7 @@ export default function Page() {
             {React.createElement(layouts[page.layout.path])}
           </Suspense>
         </PageProvider>
-      ) : !loading ? (
+      ) : !isLoading ? (
         <F404 />
       ) : undefined}
     </>

@@ -29,4 +29,50 @@ describe("managers/config", () => {
     const element = await waitFor(() => screen.getByText("Loaded"));
     expect(element).toBeInTheDocument();
   });
+  it("loading of jdt schema", async () => {
+    fetchMock.mockOnceIf("http://localhost/graphql.jdt", (request) => {
+      const encoder = new CborEncoder();
+      const val = encoder.encode({
+        def: {
+          User: {
+            p: {},
+          },
+          UserEdge: {
+            p: {
+              node: {
+                ref: "User",
+              },
+            },
+          },
+          UserList: {
+            p: {
+              edges: {
+                el: {
+                  ref: "UserEdge",
+                },
+              },
+            },
+          },
+          QueryModels: {
+            p: {
+              User: {
+                ref: "UserList",
+              },
+            },
+          },
+        },
+      });
+      return new Response(val);
+    });
+    act(() => {
+      render(
+        <PartonUIConfigManager config={configDefaults}>
+          {"Loaded"}
+        </PartonUIConfigManager>,
+      );
+    });
+    const element = await waitFor(() => screen.getByText("Loaded"));
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    expect(element).toBeInTheDocument();
+  });
 });

@@ -5,6 +5,7 @@ import { DefaultLoader } from "../controls/loader";
 import { IJtdMinRoot } from "@azerothian/jtd-types";
 
 import { CborDecoder } from "@jsonjoy.com/json-pack/lib/cbor/index";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 export type LayoutCollection = Record<
   string,
   React.ComponentType | React.LazyExoticComponent<any>
@@ -13,8 +14,8 @@ export type LayoutCollection = Record<
 export interface PartonUIConfigGraphQL {
   // loadJtd: boolean;
   jtdSchema: IJtdMinRoot | undefined;
-  client: any;
-  clientConfig: any;
+  // client: any;
+  // clientConfig: any;
 }
 
 export interface PartonUIConfig {
@@ -49,8 +50,8 @@ export const configDefaults: PartonUIConfig = {
   graphql: {
     // loadJtd: true,
     jtdSchema: undefined,
-    client: undefined,
-    clientConfig: undefined,
+    // client: undefined,
+    // clientConfig: undefined,
   },
 };
 
@@ -94,8 +95,13 @@ export default function PartonUIConfigManager(
       jtdSchema: jdtSchema,
     },
   };
+  const queryClient = new QueryClient({});
   return (
-    <PartonUIProvider value={configWithJtd}>{props.children}</PartonUIProvider>
+    <QueryClientProvider client={queryClient}>
+      <PartonUIProvider value={configWithJtd}>
+        {props.children}
+      </PartonUIProvider>
+    </QueryClientProvider>
   );
 }
 

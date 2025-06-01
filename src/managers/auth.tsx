@@ -13,12 +13,16 @@ export function AuthManager(props: { to: string; children: any }) {
   const user = getCurrentUserResult(currentUserResult);
   useEffect(() => {
     console.log("AuthManager - useEffect", currentUserResult, user);
-    if (!currentUserResult.loading && !user && location.pathname !== props.to) {
+    if (
+      !currentUserResult.isLoading &&
+      !user &&
+      location.pathname !== props.to
+    ) {
       redirect(props.to);
     }
-  }, [user, currentUserResult.loading]);
+  }, [user, currentUserResult.isLoading]);
 
-  if (currentUserResult.loading && !user) {
+  if (currentUserResult.isLoading && !user) {
     return <Fragment />;
   }
   return (

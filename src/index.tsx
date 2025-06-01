@@ -1,10 +1,4 @@
 import {
-  createMemoryCacheFromJTDSchema,
-  createBasicMemoryCache,
-} from "./apollo/memory-cache";
-export { createMemoryCacheFromJTDSchema, createBasicMemoryCache };
-
-import {
   getRolesQuery,
   getRolesResult,
   resetPasswordMutation,
@@ -51,22 +45,14 @@ import PartonUIConfigManager, {
 } from "./managers/config";
 export { PartonUIConfigContext, usePartonUIConfig, PartonUIConfigManager };
 
-import ApolloManager from "./managers/apollo";
-export { ApolloManager };
-
 import { AuthManager, useAuth } from "./managers/auth";
 export { AuthManager, useAuth };
 
 import BaseManager from "./managers/base";
 export { BaseManager };
 
-import {
-  useQuery,
-  useMutation,
-  useLazyQuery,
-  useApolloClientQuery,
-} from "./data";
-export { useQuery, useMutation, useLazyQuery, useApolloClientQuery };
+import { useQuery, useMutation } from "./data";
+export { useQuery, useMutation };
 
 import Page, { usePage } from "./managers/page";
 export { Page, usePage };
